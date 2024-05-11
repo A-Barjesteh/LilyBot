@@ -1,21 +1,31 @@
 import discord
+from discord.ext import commands
 import os
 from dotenv import load_dotenv
-from discord.ext import commands
 
 load_dotenv()
-BOT_TOKEN = os.getenv('BOT_TOKEN')
-bot = commands.Bot(command_prefix = "!", intents=discord.Intents.all())
+token = os.getenv('BOT_TOKEN')
+channel_id = os.getenv('CHANNEL_ID')
 
+prefix = "!"
+intents = discord.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix=prefix, intents=intents)
 
 @bot.event
 async def on_ready():
-    channel = bot.get_channel(1238894523195592744)
-    await channel.send("Hello! I exist")
+  channel = bot.get_channel(int(channel_id))
+  await channel.send('I am now running!')
 
 @bot.command()
-async def add(ctx,x,y):
-    result = int(x) + int(y)
-    await ctx.send(f"{x} + {y} = {result}")
+async def info(ctx):
+  roles = list()
+  for r in ctx.guild.roles:
+    roles.append(r.name)
+  await ctx.send(roles)
 
-bot.run(BOT_TOKEN)
+def main() -> None:
+  bot.run(token)
+
+if __name__ == '__main__':
+  main()

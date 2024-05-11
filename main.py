@@ -18,11 +18,13 @@ async def on_ready():
   await channel.send('I am now running!')
 
 @bot.command()
-async def info(ctx):
-  roles = list()
+async def roles(ctx):
+  embedVar = discord.Embed(title="Roles in Server")
   for r in ctx.guild.roles:
-    roles.append(r.name)
-  await ctx.send(roles)
+    if r.name != "@everyone":
+        #roles.append(r.name)
+        embedVar.add_field(name=r, value = "", inline=False)
+  await ctx.send(embed=embedVar)
 
 def main() -> None:
   bot.run(token)

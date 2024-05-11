@@ -10,7 +10,6 @@ bot = commands.Bot(command_prefix = "!", intents=discord.Intents.all())
 
 @bot.event
 async def on_ready():
-    print ("Hello! I exist")
     channel = bot.get_channel(1238894523195592744)
     await channel.send("Hello! I exist")
 
